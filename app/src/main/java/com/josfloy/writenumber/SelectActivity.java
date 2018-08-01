@@ -2,45 +2,40 @@ package com.josfloy.writenumber;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 
+import com.josfloy.writenumber.util.MusicPool;
+
 public class SelectActivity extends Activity {
-    MediaPlayer mediaPlayer;
+    MusicPool mMusicPool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
 
+        mMusicPool = new MusicPool();
+        mMusicPool.initMediaPlayer(this, R.raw.music1);
         if (MainActivity.isPlay) {
             PlayMusic();
         }
     }
 
     private void PlayMusic() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.number_music);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.start();
+        mMusicPool.playMusic();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-        }
+        mMusicPool.stopMusic();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
+        mMusicPool.destroyMusic();
     }
 
     @Override

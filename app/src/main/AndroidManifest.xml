@@ -26,7 +26,8 @@
             android:name=".SelectActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
-        <activity android:name=".AboutActivity">
+        <activity android:name=".AboutActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity
             android:name=".OneActivity"

@@ -2,14 +2,15 @@ package com.josfloy.writenumber;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.josfloy.writenumber.util.MusicPool;
+
 public class MainActivity extends Activity {
     static boolean isPlay = true;  //音乐播放状态变量
-    MediaPlayer mMediaPlayer;
+    MusicPool mMusicPool;
     Button music_btn;
 
     @Override
@@ -18,7 +19,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         music_btn = findViewById(R.id.btn_music);
-        PlayMusic();
+        mMusicPool = new MusicPool();
+        mMusicPool.initMediaPlayer(this, R.raw.main_music);
+
+        mMusicPool.playMusic();
     }
 
     @Override
@@ -26,35 +30,20 @@ public class MainActivity extends Activity {
         super.onRestart();
 
         if (isPlay) {
-            PlayMusic();
+            mMusicPool.stopMusic();
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-        }
+        mMusicPool.stopMusic();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-            mMediaPlayer.release();
-            mMediaPlayer = null;
-        }
-    }
-
-    /**
-     * 进入主界面时播放音乐
-     */
-    private void PlayMusic() {
-        mMediaPlayer = MediaPlayer.create(this, R.raw.main_music);
-        mMediaPlayer.setLooping(true);
-        mMediaPlayer.start();
+        mMusicPool.destroyMusic();
     }
 
     public void OnPlay(View v) {
@@ -67,16 +56,15 @@ public class MainActivity extends Activity {
 
     public void OnMusic(View v) {
         if (isPlay) {
-            if (mMediaPlayer != null) {
-                mMediaPlayer.stop();
+            if (mMusicPool != null) {
+                mMusicPool.stopMusic();
                 music_btn.setBackgroundResource(R.drawable.btn_music2);
                 isPlay = false;
-            } else {
-                PlayMusic();
-                music_btn.setBackgroundResource(R.drawable.btn_about1);
-                isPlay = true;
             }
+        }else {
+            mMusicPool.playMusic();
+            music_btn.setBackgroundResource(R.drawable.btn_music1);
+            isPlay = true;
         }
     }
-
 }

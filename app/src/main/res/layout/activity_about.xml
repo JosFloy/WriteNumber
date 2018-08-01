@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AboutActivity">
-
-</android.support.constraint.ConstraintLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg"
+              android:orientation="vertical">
+    <!--显示按钮，标题，LOGO图标的相对布局-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!--返回上一界面的按钮-->
+        <Button
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/back_bg"
+            android:layout_margin="5dp"
+            android:onClick="OnBack"/>
+        <!--显示标题-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:id="@+id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="关于我们"
+            android:textColor="#FFFFFF" /><!--显示LOGO图标-->
+    </RelativeLayout>
+</LinearLayout>
